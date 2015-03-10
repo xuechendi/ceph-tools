@@ -1,2 +1,2 @@
-../cbt.py --archive=/home/ubuntu/data/foo ./runtests.xfs.yaml
+../cbt.py --archive=/mnt/data ./runtests.xfs.yaml
 

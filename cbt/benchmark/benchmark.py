@@ -28,7 +28,7 @@ class Benchmark(object):
         if not use_existing:
             self.cluster.initialize()
 
-        self.cleanup()
+        #self.cleanup()
         # Create the run directory
         common.make_remote_dir(self.run_dir)
 

@@ -30,6 +30,7 @@ class Ceph(Cluster):
         self.idle_duration = config.get('idle_duration', 0)
 
     def initialize(self): 
+        print "===================START TO INITIALIZE CEPH================="
         super(Ceph, self).initialize()
 
         # unmount any kernel rbd volumes
@@ -59,6 +60,9 @@ class Ceph(Cluster):
         self.make_mons()
         self.make_osds()
         monitoring.stop()
+
+        print "=============Ceph Cluster Building finished==========="
+        common.pdsh(settings.getnodes('mons'), 'ps aux | grep ceph').communicate()
 
         # Check Health
         monitoring.start('%s/initial_health_check' % self.monitoring_dir)
@@ -112,6 +116,7 @@ class Ceph(Cluster):
         for device in xrange (0,sc.get('osds_per_node')):
             osds = settings.getnodes('osds')
             common.pdsh(osds, 'sudo umount /dev/disk/by-partlabel/osd-device-%s-data' % device).communicate()
+            #common.pdsh(osds, 'sudo umount /dev/' % disk).communicate()
             common.pdsh(osds, 'sudo rm -rf %s/osd-device-%s-data' % (self.mnt_dir, device)).communicate()
             common.pdsh(osds, 'sudo mkdir -p -m0755 -- %s/osd-device-%s-data' % (self.mnt_dir, device)).communicate()
 
