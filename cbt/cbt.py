@@ -26,6 +26,7 @@ def parse_args():
         help = 'YAML config file.',
         )
     args = parser.parse_args()
+    print args
     return args
 
 if __name__ == '__main__':
